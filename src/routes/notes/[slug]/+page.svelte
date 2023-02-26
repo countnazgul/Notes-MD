@@ -3,13 +3,18 @@
 	import "highlight.js/styles/github-dark.css";
 	import showdown from "showdown";
 	import Delete from "$lib/icons/Delete.svelte";
-	import { goto } from "$app/navigation";
+	import Reload from "$lib/icons/Reload.svelte";
+	import { goto, invalidateAll } from "$app/navigation";
 
 	export let data: { note: { id: string; content: string; path: string; user: number } };
 
 	async function deleteNote() {
 		await fetch(`/api/note/${data.note.id}`, { method: "DELETE" });
 		goto("/notes", { invalidateAll: true });
+	}
+
+	async function refreshData() {
+		invalidateAll();
 	}
 
 	showdown.extension("highlight", function () {
@@ -59,6 +64,9 @@
 
 <note>
 	<actions>
+		<div class="button-reload" title="Refresh" on:click={refreshData} on:keydown={refreshData}>
+			<Reload />
+		</div>
 		{#if data.note.path}
 			<div class="button-container">
 				<a
@@ -70,6 +78,7 @@
 				>
 			</div>
 		{/if}
+
 		<div class="button-delete" title="Delete" on:click={deleteNote} on:keydown={deleteNote}>
 			<Delete />
 		</div>
@@ -96,7 +105,7 @@
 		justify-content: center;
 		align-items: center;
 		opacity: 1;
-		border-radius: 5px 0px 0px 5px;
+		border-radius: 0px 0px 0px 0px;
 	}
 
 	.button-container {
@@ -113,6 +122,17 @@
 		display: flex;
 		padding-inline: 5px;
 		background-color: #852525;
+		cursor: pointer;
+		z-index: 999;
+	}
+
+	.button-reload {
+		opacity: 1;
+		width: 25px;
+		border-radius: 5px 0px 0px 5px;
+		display: flex;
+		padding-inline: 5px;
+		background-color: var(--color-green);
 		cursor: pointer;
 		z-index: 999;
 	}

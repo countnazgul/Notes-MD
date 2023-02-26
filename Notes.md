@@ -5,8 +5,6 @@
 - remove/delete account and data #HIGH
 - automated deployment #HIGH
     - template DB to be pushed on deployment #HIGH
-- reload/refresh #LOW
-    - reload/refresh buttons to get latest data for notes list and the current note content
 - main page design #MEDIUM
     NOTE: done some work on it. More should be done.
     - explanation
@@ -15,6 +13,8 @@
     - include link to VSCode marketplace for the extension
     - short explanation of any MD assumptions (like tab size)
 
+- ~~reload/refresh~~ #DONE
+    - ~~reload/refresh buttons to get latest data for notes list and the current note content~~
 - ~~user profile~~ #DONE
     - main page to display user info (from GH)
     - (re)generate api key
