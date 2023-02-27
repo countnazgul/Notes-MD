@@ -2,6 +2,7 @@
 	import hljs from "highlight.js";
 	import "highlight.js/styles/github-dark.css";
 	import showdown from "showdown";
+	import { showdownToc } from "$lib/util/showdownToc";
 	import Delete from "$lib/icons/Delete.svelte";
 	import Reload from "$lib/icons/Reload.svelte";
 	import { goto, invalidateAll } from "$app/navigation";
@@ -51,12 +52,17 @@
 		];
 	});
 
+	const toc: any = [];
 	const converter = new showdown.Converter({
-		extensions: ["highlight"],
+		extensions: ["highlight", showdownToc({ toc })],
 		strikethrough: true,
 		tables: true,
 		emoji: true,
-		encodeEmails: true
+		encodeEmails: true,
+		ghCodeBlocks: true,
+		metadata: true,
+		tasklists: true,
+		underline: true
 	});
 
 	$: html = converter.makeHtml(data.note.content);
